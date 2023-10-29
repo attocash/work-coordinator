@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    gcp:
+      project-id: ${PUBSUB_PROJECT_ID}
+      pubsub:
+        subscriber:
+          flow-control:
+            max-outstanding-element-count: ${PUBSUB_SUBSCRIBER_MAX_OUTSTANDING_ELEMENT_COUNT:}
+
+atto:
+  pubsub:
+    work-requested-topic: ${PUBSUB_WORK_REQUESTED_TOPIC}
+    work-generated-subscription: ${PUBSUB_WORK_GENERATED_SUBSCRIPTION}

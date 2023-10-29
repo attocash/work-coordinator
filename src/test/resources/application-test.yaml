@@ -1,0 +1,7 @@
+spring.cloud.gcp.project-id: project
+
+
+atto:
+  pubsub:
+    work-requested-topic: requested-topic
+    work-generated-subscription: generated-subscription

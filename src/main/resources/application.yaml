@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: atto-node
+  main:
+    banner-mode: off
+  threads:
+    virtual:
+      enabled: true
+  mvc:
+    format:
+      date: iso
+      time: iso
+      date-time: iso
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: '/'
