@@ -14,7 +14,7 @@ sequenceDiagram
     participant WC as Work Coordinator
     participant Q as Queue
     participant WA as Worker Adapter
-    participant W as Worker
+    participant W as Worker Server
     C ->> WC: Request work
     WC ->> Q: Enqueue work request
     Q -->> WA: Provide PoW request
