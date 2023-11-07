@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "cash.atto"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
