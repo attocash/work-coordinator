@@ -15,7 +15,7 @@ group = "cash.atto"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_20
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -63,6 +63,9 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
     testImplementation("org.awaitility:awaitility:4.2.0")
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-stub-runner")
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:gcloud")
+    testImplementation("org.testcontainers:testcontainers")
 
 
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
@@ -75,10 +78,6 @@ dependencies {
         }
 
         else -> {
-            testImplementation("org.springframework.boot:spring-boot-testcontainers")
-            testImplementation("org.testcontainers:gcloud")
-            testImplementation("org.testcontainers:testcontainers")
-
             implementation("com.google.cloud:spring-cloud-gcp-starter-pubsub")
         }
     }
@@ -87,7 +86,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "20"
+        jvmTarget = "21"
     }
 }
 

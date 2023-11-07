@@ -1,12 +1,11 @@
 name: Pipeline
 
 on:
+  workflow_call:
   push:
     branches:
-      - '**'
-  pull_request:
-    branches:
-      - '**'
+      - 'release/[0-9]+.x'
+      - main
 
 jobs:
   build:
@@ -21,25 +20,11 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets:
       token: ${{ secrets.TOKEN }}
-  dev:
+  release:
     if: "startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '.x')"
     needs: [ docker ]
     uses: ./.github/workflows/release.yaml
     with:
-      environment: dev
-    secrets:
-      token: ${{ secrets.TOKEN }}
-  beta:
-    needs: [ dev ]
-    uses: ./.github/workflows/release.yaml
-    with:
-      environment: beta
-    secrets:
-      token: ${{ secrets.TOKEN }}
-  live:
-    needs: [ beta ]
-    uses: ./.github/workflows/release.yaml
-    with:
-      environment: live
+      environment: docker
     secrets:
       token: ${{ secrets.TOKEN }}

@@ -10,7 +10,7 @@ import java.time.Duration
 class ApplicationConfiguration {
     @Bean
     fun restTemplate(
-        applicationProperties: cash.atto.work.ApplicationProperties,
+        applicationProperties: ApplicationProperties,
         builder: RestTemplateBuilder
     ): RestTemplate {
         return builder

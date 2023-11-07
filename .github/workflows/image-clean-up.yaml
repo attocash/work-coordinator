@@ -15,7 +15,7 @@ jobs:
       - name: Clean up
         run: |
           PACKAGE_VERSIONS=$(curl --request GET \
-          --url "https://api.github.com/orgs/AttoCash/packages/container/node/versions" \
+          --url "https://api.github.com/orgs/AttoCash/packages/container/work-coordinator/versions" \
           --header "Authorization: Bearer $TOKEN" \
           --header "Accept: application/vnd.github.v3+json")
           
@@ -48,7 +48,7 @@ jobs:
           for ID in "${VERSION_IDS_TO_DELETE[@]}"; do
             echo "Deleting version with ID: $ID"
             curl --request DELETE \
-              --url "https://api.github.com/orgs/AttoCash/packages/container/node/versions/$ID" \
+              --url "https://api.github.com/orgs/AttoCash/packages/container/work-coordinator/versions/$ID" \
               --header "Authorization: Bearer $TOKEN" \
               --header "Accept: application/vnd.github.v3+json"
           done
