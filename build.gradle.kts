@@ -12,21 +12,17 @@ plugins {
 }
 
 group = "cash.atto"
-version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_17
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
+repositories {
+    mavenCentral()
+    maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
-}
-
-repositories {
-    mavenCentral()
-    maven { url = uri("https://repo.spring.io/milestone") }
 }
 
 extra["springCloudGcpVersion"] = "4.8.2"
