@@ -1,7 +1,7 @@
 on:
   workflow_call:
     inputs:
-      environment:
+      profile:
         required: true
         type: string
     secrets:
@@ -11,7 +11,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ inputs.profile }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +28,7 @@ jobs:
           
           if [ -z "$LATEST_TAG" ]; then
             MINOR=0
-          elif [ "${{ inputs.environment }}" == "dev" ]; then
+          elif [ "${{ inputs.profile }}" == "pubsub" ]; then
             MINOR=$(( ${LATEST_TAG##*.} + 1 ))
           else
             MINOR=${LATEST_TAG##*.}
@@ -38,20 +38,20 @@ jobs:
           
           echo "FROM ghcr.io/attocash/work-coordinator:${{ github.sha }}" > EnvDockerfile
           echo "LABEL org.opencontainers.image.source https://github.com/attocash/work-coordinator" >> EnvDockerfile
-          echo "ENV SPRING_PROFILES_ACTIVE=${{ inputs.environment }}" >> EnvDockerfile
+          echo "ENV SPRING_PROFILES_ACTIVE=${{ inputs.profile }}" >> EnvDockerfile
           
-          docker build -t ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.environment }} -f EnvDockerfile .
-          docker tag ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.environment }} ghcr.io/attocash/work-coordinator:${MAJOR_VERSION}-${{ inputs.environment }}
-          docker push ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.environment }}
-          docker push ghcr.io/attocash/work-coordinator:${MAJOR_VERSION}-${{ inputs.environment }}
+          docker build -t ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.profile }} -f EnvDockerfile .
+          docker tag ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.profile }} ghcr.io/attocash/work-coordinator:${MAJOR_VERSION}-${{ inputs.profile }}
+          docker push ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.profile }}
+          docker push ghcr.io/attocash/work-coordinator:${MAJOR_VERSION}-${{ inputs.profile }}
           
           HIGHER_MAJOR_EXISTS=$(git tag --list 'v*' --sort=-v:refname | awk -F. '{print $1}' | sed 's/v//' | uniq | awk -v curr="$MAJOR_VERSION" '$1>curr {print "yes"; exit}')
           if [ "$HIGHER_MAJOR_EXISTS" != "yes" ]; then
-            docker tag ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.environment }} ghcr.io/attocash/work-coordinator:${{ inputs.environment }}
-            docker push ghcr.io/attocash/work-coordinator:${{ inputs.environment }}
+            docker tag ghcr.io/attocash/work-coordinator:${NEXT_TAG}-${{ inputs.profile }} ghcr.io/attocash/work-coordinator:${{ inputs.profile }}
+            docker push ghcr.io/attocash/work-coordinator:${{ inputs.profile }}
           fi
           
-          if [ "${{ inputs.environment }}" == "dev" ]; then
+          if [ "${{ inputs.profile }}" == "pubsub" ]; then
             git tag v$NEXT_TAG
             git push origin v$NEXT_TAG
           fi

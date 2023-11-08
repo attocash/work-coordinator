@@ -67,16 +67,8 @@ dependencies {
     implementation("net.logstash.logback:logstash-logback-encoder:7.4")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
-    when (project.findProperty("messaging")) {
-        "pubsub" -> {
-            implementation("com.google.cloud:spring-cloud-gcp-starter-pubsub")
-            implementation("com.google.cloud:google-cloud-monitoring")
-        }
-
-        else -> {
-            implementation("com.google.cloud:spring-cloud-gcp-starter-pubsub")
-        }
-    }
+    implementation("com.google.cloud:spring-cloud-gcp-starter-pubsub")
+    implementation("com.google.cloud:google-cloud-monitoring")
 }
 
 tasks.withType<KotlinCompile> {

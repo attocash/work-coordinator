@@ -22,9 +22,13 @@ jobs:
       token: ${{ secrets.TOKEN }}
   release:
     if: "startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '.x')"
-    needs: [ docker ]
+    needs:
+      - docker
+    strategy:
+      matrix:
+        version: [ "pubsub" ]
     uses: ./.github/workflows/release.yaml
     with:
-      environment: docker
+      environment: ${{ matrix.pubsub }}
     secrets:
       token: ${{ secrets.TOKEN }}
