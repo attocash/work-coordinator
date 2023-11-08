@@ -26,9 +26,9 @@ jobs:
       - docker
     strategy:
       matrix:
-        version: [ "pubsub" ]
+        messaging: [ "pubsub" ]
     uses: ./.github/workflows/release.yaml
     with:
-      environment: ${{ matrix.pubsub }}
+      environment: ${{ matrix.messaging }}
     secrets:
       token: ${{ secrets.TOKEN }}
