@@ -29,6 +29,6 @@ jobs:
         messaging: [ "pubsub" ]
     uses: ./.github/workflows/release.yaml
     with:
-      environment: ${{ matrix.messaging }}
+      profile: ${{ matrix.messaging }}
     secrets:
       token: ${{ secrets.TOKEN }}
