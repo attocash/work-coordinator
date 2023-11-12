@@ -14,8 +14,8 @@ class ApplicationConfiguration {
         builder: RestTemplateBuilder
     ): RestTemplate {
         return builder
-            .setConnectTimeout(Duration.ofMillis(applicationProperties.callback.readTimeout))
-            .setReadTimeout(Duration.ofMillis(applicationProperties.callback.connectTimeout))
+            .setConnectTimeout(Duration.ofMillis(applicationProperties.callback.connectTimeout))
+            .setReadTimeout(Duration.ofMillis(applicationProperties.callback.readTimeout))
             .build()
     }
 
