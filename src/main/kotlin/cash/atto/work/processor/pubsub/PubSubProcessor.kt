@@ -27,12 +27,12 @@ class PubSubProcessor(
     fun init() {
         val consumer = Consumer<ConvertedBasicAcknowledgeablePubsubMessage<WorkGenerated>> {
             Thread.startVirtualThread {
-                val generatedEvent = it.payload
+                val workGenerated = it.payload
                 try {
-                    applicationEventPublisher.publishEvent(generatedEvent)
+                    applicationEventPublisher.publishEvent(workGenerated)
                     it.ack()
                 } catch (e: Exception) {
-                    logger.error(e) { "Callback failed for $generatedEvent" }
+                    logger.error(e) { "Callback failed for $workGenerated" }
                 }
             }
         }

@@ -108,6 +108,10 @@ class CucumberConfiguration(
             { subscriberTemplate.pullAndAck(workRequestedSubscription, Integer.MAX_VALUE, true) },
             hasSize(0)
         )
+        await().until(
+            { subscriberTemplate.pullAndAck(pubSubProperties.workGeneratedSubscription, Integer.MAX_VALUE, true) },
+            hasSize(0)
+        )
     }
 
 }
