@@ -29,7 +29,7 @@ sequenceDiagram
 ## Endpoints
 
 ```
-POST /work/{hash}
+POST /works/{hash}
 
 {
   "network": "LIVE",
@@ -50,10 +50,6 @@ POST ?
 }
 
 ````
-
-## TODO:
-
-Publish docker image
 
 ## Supported Messaging Systems
 
