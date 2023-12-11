@@ -38,7 +38,7 @@ dependencyManagement {
 dependencies {
     val cucumberVersion = "7.14.1"
 
-    implementation("cash.atto:commons:1.2.0")
+    implementation("cash.atto:commons:1.3.2")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
