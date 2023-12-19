@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.servlet.http.HttpServletRequest
+import kotlinx.datetime.Instant
+import kotlinx.serialization.Serializable
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.time.Instant
 
 
 @RestController
@@ -28,4 +29,5 @@ class WorkController(private val coordinator: WorkCoordinator, private val objec
     }
 }
 
+@Serializable
 data class WorkRequest(val network: AttoNetwork, val timestamp: Instant, val callback: String)

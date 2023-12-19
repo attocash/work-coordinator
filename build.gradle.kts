@@ -4,8 +4,9 @@ plugins {
     val kotlinVersion = "1.9.21"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
 
-    id("org.springframework.boot") version "3.1.5"
+    id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
 //    id("org.graalvm.buildtools.native") version "0.9.27"
 
@@ -25,8 +26,8 @@ configurations {
     }
 }
 
-extra["springCloudGcpVersion"] = "4.8.2"
-extra["springCloudVersion"] = "2022.0.4"
+extra["springCloudGcpVersion"] = "5.0.0"
+extra["springCloudVersion"] = "2023.0.0"
 
 dependencyManagement {
     imports {
@@ -38,8 +39,9 @@ dependencyManagement {
 dependencies {
     val cucumberVersion = "7.15.0"
 
-    implementation("cash.atto:commons:1.3.2")
+    implementation("cash.atto:commons:2.0.1")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
