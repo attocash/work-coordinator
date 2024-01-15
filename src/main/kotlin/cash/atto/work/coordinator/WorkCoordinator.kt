@@ -1,21 +1,25 @@
 package cash.atto.work.coordinator
 
+import cash.atto.commons.AttoHash
 import cash.atto.commons.AttoNetwork
 import cash.atto.commons.AttoWork
 import cash.atto.work.WorkGenerated
 import cash.atto.work.WorkRequested
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
-data class CallbackRequest(val hash: String, val work: String)
+@Serializable
+data class CallbackRequest(@Contextual val hash: AttoHash, @Contextual val work: AttoWork)
 
 @Service
 class WorkCoordinator(private val publisher: ApplicationEventPublisher, private val restTemplate: RestTemplate) {
-    fun request(network: AttoNetwork, hash: String, timestamp: Instant, callback: String) {
+    fun request(network: AttoNetwork, hash: AttoHash, timestamp: Instant, callback: String) {
         if (timestamp > Clock.System.now()) {
             throw IllegalArgumentException("Timestamp $timestamp is in the future")
         }
@@ -29,7 +33,7 @@ class WorkCoordinator(private val publisher: ApplicationEventPublisher, private 
         callback(event.callbackUrl, event.hash, event.work)
     }
 
-    private fun callback(callback: String, hash: String, work: String) {
+    private fun callback(callback: String, hash: AttoHash, work: AttoWork) {
         val request = CallbackRequest(hash, work)
         restTemplate.postForLocation(callback, request)
     }
