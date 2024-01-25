@@ -3,9 +3,7 @@ package cash.atto.work.coordinator
 import cash.atto.commons.AttoNetwork
 import cash.atto.commons.AttoOpenBlock
 import cash.atto.commons.AttoWork
-import cash.atto.commons.serialiazers.json.AttoJson
 import cash.atto.work.*
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.google.cloud.spring.pubsub.core.PubSubTemplate
 import io.cucumber.java.en.Then
@@ -20,7 +18,6 @@ class WorkStepDefinition(
     val pubSubTemplate: PubSubTemplate,
     val testRestTemplate: TestRestTemplate,
     val environment: Environment,
-    val objectMapper: ObjectMapper,
 ) {
 
     @When("work is requested")
@@ -33,7 +30,7 @@ class WorkStepDefinition(
             )
         )
         val wiremockPort = environment.getRequiredProperty("wiremock.server.port")
-        val request = WorkRequest(AttoNetwork.LOCAL, block.timestamp, "http://localhost:${wiremockPort}/callback")
+        val request = WorkRequest(AttoNetwork.LOCAL, block.timestamp, "http://localhost:${wiremockPort}/${block.hash}/callback")
         val response = testRestTemplate.postForEntity("/works/${block.hash}", request, String::class.java)
         assertTrue(response.body, response.statusCode.is2xxSuccessful)
     }
@@ -70,13 +67,12 @@ class WorkStepDefinition(
     fun verifyCallback() {
         val workGenerated = PropertyHolder.get(WorkGenerated::class.java)
 
-        val request = Waiter.waitUntilNonNull {
-            findAll(postRequestedFor(urlEqualTo("/callback")))
+        val work = Waiter.waitUntilNonNull {
+            findAll(postRequestedFor(urlEqualTo("/${workGenerated.hash}/callback")))
                 .map { it.bodyAsString }
-                .map { AttoJson.decodeFromString(CallbackRequest.serializer(), it) }
-                .firstOrNull { it.hash == workGenerated.hash }
+                .firstOrNull()
         }!!
 
-        assertEquals(workGenerated.work, request.work)
+        assertEquals(workGenerated.work, AttoWork.parse(work))
     }
 }

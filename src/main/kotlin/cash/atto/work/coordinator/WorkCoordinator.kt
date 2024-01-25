@@ -7,15 +7,10 @@ import cash.atto.work.WorkGenerated
 import cash.atto.work.WorkRequested
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
-
-@Serializable
-data class CallbackRequest(@Contextual val hash: AttoHash, @Contextual val work: AttoWork)
 
 @Service
 class WorkCoordinator(private val publisher: ApplicationEventPublisher, private val restTemplate: RestTemplate) {
@@ -30,12 +25,11 @@ class WorkCoordinator(private val publisher: ApplicationEventPublisher, private 
 
     @EventListener
     fun process(event: WorkGenerated) {
-        callback(event.callbackUrl, event.hash, event.work)
+        callback(event.callbackUrl, event.work)
     }
 
-    private fun callback(callback: String, hash: AttoHash, work: AttoWork) {
-        val request = CallbackRequest(hash, work)
-        restTemplate.postForLocation(callback, request)
+    private fun callback(callback: String, work: AttoWork) {
+        restTemplate.postForObject(callback, work.toString(), Void::class.java)
     }
 
 }

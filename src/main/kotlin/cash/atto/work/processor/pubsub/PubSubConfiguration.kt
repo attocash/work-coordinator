@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Profile
 @Profile(value = ["pubsub", "test"])
 class PubSubConfiguration {
     @Bean
-    fun pubSubMessageConverter(objectMapper: ObjectMapper): PubSubMessageConverter {
+    fun pubSubMessageConverter(): PubSubMessageConverter {
         return object : PubSubMessageConverter {
             override fun toPubSubMessage(payload: Any, headers: MutableMap<String, String>?): PubsubMessage {
                 val serializer = AttoJson.serializersModule.serializer(payload::class.java)
