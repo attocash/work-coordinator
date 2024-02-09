@@ -5,4 +5,4 @@ on:
 
 jobs:
   pipeline:
-    uses: ./.github/workflows/test.yaml
+    uses: ./.github/workflows/pipeline.yaml
