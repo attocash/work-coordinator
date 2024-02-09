@@ -16,5 +16,4 @@ jobs:
 
       - uses: gradle/gradle-build-action@v3
 
-      - name: test
-        run: ./gradlew test
+      - run: ./gradlew test

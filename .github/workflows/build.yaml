@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4
+      - uses: graalvm/setup-graalvm@v1
         with:
           distribution: 'graalvm-community'
           java-version: '21'
