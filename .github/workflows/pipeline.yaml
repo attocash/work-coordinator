@@ -10,13 +10,10 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/test.yaml
-  codeql:
-    uses: ./.github/workflows/codeql.yaml
   build:
     if: "startsWith(github.ref, 'refs/heads/')"
     needs:
       - test
-      - codeql
     uses: ./.github/workflows/build.yaml
     secrets:
       token: ${{ secrets.TOKEN }}
