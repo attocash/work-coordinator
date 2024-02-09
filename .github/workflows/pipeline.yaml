@@ -23,7 +23,7 @@ jobs:
   release:
     if: "startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '.x')"
     needs:
-      - docker
+      - build
     strategy:
       matrix:
         messaging: [ "pubsub" ]
