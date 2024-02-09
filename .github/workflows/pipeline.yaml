@@ -8,14 +8,14 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     uses: ./.github/workflows/test.yaml
   codeql:
     uses: ./.github/workflows/codeql.yaml
-  docker:
+  build:
     if: "startsWith(github.ref, 'refs/heads/')"
     needs:
-      - build
+      - test
       - codeql
     uses: ./.github/workflows/build.yaml
     secrets:
