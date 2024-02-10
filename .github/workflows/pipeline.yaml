@@ -8,22 +8,22 @@ on:
       - main
 
 jobs:
-  build:
-    uses: ./.github/workflows/build.yaml
+  test:
+    uses: ./.github/workflows/test.yaml
   codeql:
     uses: ./.github/workflows/codeql.yaml
-  docker:
+  build:
     if: "startsWith(github.ref, 'refs/heads/')"
     needs:
-      - build
+      - test
       - codeql
-    uses: ./.github/workflows/docker.yaml
+    uses: ./.github/workflows/build.yaml
     secrets:
       token: ${{ secrets.TOKEN }}
   release:
     if: "startsWith(github.ref, 'refs/heads/release/') && endsWith(github.ref, '.x')"
     needs:
-      - docker
+      - build
     strategy:
       matrix:
         messaging: [ "pubsub" ]

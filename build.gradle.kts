@@ -8,8 +8,7 @@ plugins {
 
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
-//    id("org.graalvm.buildtools.native") version "0.9.27"
-
+    id("org.graalvm.buildtools.native") version "0.9.28"
 }
 
 group = "cash.atto"
@@ -22,6 +21,9 @@ repositories {
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
+    }
+    all {
+        exclude(group = "commons-logging", module = "commons-logging")
     }
 }
 
@@ -81,4 +83,13 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+graalvmNative {
+    binaries {
+        named("main") {
+            buildArgs.add("--static")
+            buildArgs.add("--libc=musl")
+        }
+    }
 }
