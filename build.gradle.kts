@@ -88,7 +88,8 @@ tasks.withType<Test> {
 graalvmNative {
     binaries {
         named("main") {
-            buildArgs.add("--additional-build-args=--static")
+            buildArgs.add("--static")
+            buildArgs.add("--libc=musl")
         }
     }
 }
