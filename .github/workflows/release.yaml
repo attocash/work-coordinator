@@ -15,8 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: tags
-        run: git fetch --tags
+      - run: git fetch --tags
 
       - name: release
         run: |

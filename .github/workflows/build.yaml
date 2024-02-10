@@ -36,5 +36,5 @@ jobs:
           pull: true
           push: true
           tags: |
-            ghcr.io/attocash/${{steps.repo_name.outputs.name}}:${{ github.sha }}
-            ghcr.io/attocash/${{steps.repo_name.outputs.name}}:${{ env.BRANCH_NAME }}
+            ghcr.io/attocash/${{ github.repository }}:${{ github.sha }}
+            ghcr.io/attocash/${{ github.repository }}:${{ env.BRANCH_NAME }}
