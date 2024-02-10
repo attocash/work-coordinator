@@ -86,8 +86,6 @@ graalvmNative {
     binaries {
         named("main") {
             buildArgs.add("-H:+UnlockExperimentalVMOptions")
-            buildArgs.add("-H:ReflectionConfigurationResources")
-            buildArgs.add("-H:ResourceConfigurationResources")
         }
     }
 }
