@@ -84,3 +84,11 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+graalvmNative {
+    binaries {
+        named("main") {
+            buildArgs.add("--additional-build-args=--static")
+        }
+    }
+}
