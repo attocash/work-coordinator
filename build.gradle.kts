@@ -81,3 +81,11 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+graalvmNative {
+    binaries {
+        named("main") {
+            buildArgs.add("-H:+UnlockExperimentalVMOptions")
+        }
+    }
+}
