@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/static:debug
+FROM gcr.io/distroless/static:nonroot
 
 COPY ./build/native/nativeCompile/work-coordinator /app/work-coordinator
 
