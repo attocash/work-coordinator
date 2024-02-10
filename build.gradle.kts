@@ -22,6 +22,9 @@ configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
+    all {
+        exclude(group = "commons-logging", module = "commons-logging")
+    }
 }
 
 extra["springCloudGcpVersion"] = "5.0.0"
@@ -80,12 +83,4 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-graalvmNative {
-    binaries {
-        named("main") {
-            buildArgs.add("-H:+UnlockExperimentalVMOptions")
-        }
-    }
 }
