@@ -1,6 +1,6 @@
 FROM gcr.io/distroless/static:debug
 
-COPY ./build/native/work-coordinator /app/work-coordinator
+COPY ./build/native/work-coordinator/nativeCompile /app/work-coordinator
 
 WORKDIR /app
 
