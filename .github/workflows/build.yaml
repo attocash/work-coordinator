@@ -14,6 +14,7 @@ jobs:
           distribution: 'graalvm-community'
           java-version: '21'
           native-image-musl: true
+          components: 'native-image'
 
       - uses: gradle/gradle-build-action@v3
 
