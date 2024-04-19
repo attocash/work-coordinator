@@ -38,7 +38,7 @@ dependencyManagement {
 }
 
 dependencies {
-    val cucumberVersion = "7.16.1"
+    val cucumberVersion = "7.17.0"
 
     implementation("cash.atto:commons:2.9.0")
 
