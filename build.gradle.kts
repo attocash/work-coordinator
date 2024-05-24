@@ -83,7 +83,6 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-    maxHeapSize = "1g"
 }
 
 graalvmNative {
