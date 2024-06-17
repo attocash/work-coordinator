@@ -1,3 +1,5 @@
+# Managed by management-terraform
+
 name: Cleanup Old Docker Images
 
 on:
@@ -15,7 +17,7 @@ jobs:
       - name: Clean up
         run: |
           PACKAGE_VERSIONS=$(curl --request GET \
-          --url "https://api.github.com/orgs/AttoCash/packages/container/work-coordinator/versions" \
+          --url "https://api.github.com/orgs/AttoCash/packages/container/${{ github.repository }}/versions" \
           --header "Authorization: Bearer $TOKEN" \
           --header "Accept: application/vnd.github.v3+json")
           
@@ -33,7 +35,7 @@ jobs:
           
             DELETE=true
             for TAG in $TAGS; do
-              if [[ $TAG =~ ^[0-9]+\.[0-9]+-(pubsub|sqs)$|^[0-9]+-(pubsub|sqs)$|^(pubsub|sqs)$ ]]; then
+              if [[ $TAG =~ ^[0-9]+\.[0-9]+-(dev|beta|live)$|^[0-9]+-(dev|beta|live)$|^(dev|beta|live)$ ]]; then
                 DELETE=false
                 break
               fi
@@ -48,7 +50,7 @@ jobs:
           for ID in "${VERSION_IDS_TO_DELETE[@]}"; do
             echo "Deleting version with ID: $ID"
             curl --request DELETE \
-              --url "https://api.github.com/orgs/AttoCash/packages/container/work-coordinator/versions/$ID" \
+              --url "https://api.github.com/orgs/AttoCash/packages/container/node/versions/$ID" \
               --header "Authorization: Bearer $TOKEN" \
               --header "Accept: application/vnd.github.v3+json"
           done
