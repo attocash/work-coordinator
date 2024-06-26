@@ -42,7 +42,7 @@ dependencies {
 
     implementation("cash.atto:commons:2.9.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
